@@ -6,8 +6,8 @@
     "type": "project",
     "require": {
         "php": "^7.1.3",
-        "cncal/getui": "^0.1.2",
         "fideloper/proxy": "^4.0",
+        "cncal/getui": "^0.1.2",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0"
     },

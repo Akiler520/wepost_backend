@@ -19,9 +19,9 @@ class MessageController extends Controller
 
 
     public function send(){
-        MessageBusiness::notice([]);
+        $ret = MessageBusiness::notice("大牛消息测试");
 
-        MTResponse::jsonResponse("ok", RESPONSE_SUCCESS);
+        MTResponse::jsonResponse("ok", RESPONSE_SUCCESS, $ret);
     }
 
 }

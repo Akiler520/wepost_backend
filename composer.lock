@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b86295d2234df1712eac534546f962e6",
+    "content-hash": "8bc99b56906388eb4d0b5c79b343a5f2",
     "packages": [
         {
             "name": "cncal/getui",

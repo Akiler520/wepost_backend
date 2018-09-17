@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Business\MessageBusiness;
 use App\Lib\MTResponse;
 use App\Libraries\Ak\AkUploader;
 use App\Models\Article;
@@ -80,6 +81,8 @@ class ArticleController extends Controller
             }
 
         }
+
+        MessageBusiness::notice($insertData['content']);
 
         MTResponse::jsonResponse("ok", RESPONSE_SUCCESS);
     }
