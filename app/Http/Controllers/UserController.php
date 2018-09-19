@@ -203,11 +203,11 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        $phone = $request->input("phone");
+        $phone = $request->input("username");
         $password = $request->input("password");
         $verifyCode = $request->input("code");
 
-        $codeInfo = Sms::getByPhone($phone, 1, 60 * 5);
+        $codeInfo = Sms::getValid($phone, 1);
 
         if (!$codeInfo || $codeInfo->code != $verifyCode) {
             MTResponse::jsonResponse("验证码错误", RESPONSE_ERROR);
@@ -216,7 +216,7 @@ class UserController extends Controller
         $newData = [
             'username'  => $phone,
             'nickname'  => $phone,
-            'password'  => $password
+            'password'  => md5($password)
         ];
 
         $deployEnvObj = new  User();

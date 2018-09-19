@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Lib\MTResponse;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -46,6 +47,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        switch ($exception){
+            case ($exception instanceof ModelNotFoundException):
+            case ($exception instanceof \HttpException):
+            default:
+                $message    = $exception->getMessage();
+                $code       = $exception->getCode();
+                $file       = $exception->getFile();
+                $line       = $exception->getLine();
+
+                MTResponse::jsonResponse("{$message}", RESPONSE_ERROR);
+
+                break;
+        }
+
         return parent::render($request, $exception);
     }
 }

@@ -145,7 +145,7 @@ class MessageBusiness
         !in_array($type, [1, 2]) && MTResponse::jsonResponse("当前不支持您选择的短信类型！", RESPONSE_ERROR);
 
         // 检测1分钟内不能重复发送短信给同一个电话号码
-        $hasSend = Sms::getByPhone($phone, $type, 60);
+        $hasSend = Sms::getValidInTime($phone, $type, time() - 60);
 
         $hasSend && MTResponse::jsonResponse("请勿在1分钟内重复发短信，谢谢支持！", RESPONSE_ERROR);
 

@@ -48,19 +48,27 @@ class Sms extends Base
      *
      * @param $phone
      * @param $type
-     * @param $expire
      *
      * @return \Illuminate\Database\Eloquent\Model|null|object|static
      */
-    public static function getByPhone($phone, $type, $expire = 0)
+    public static function getValid($phone, $type)
     {
         $info = self::query()
             ->where("phone", $phone)
-            ->where("type", $type);
+            ->where("type", $type)
+            ->where("expire_time", ">", now())
+            ->first();
 
-        ($expire > 0) && $info = $info->where("expire_time", ">", time() + $expire);
+        return $info;
+    }
 
-        $info = $info->first();
+    public static function getValidInTime($phone, $type, $time)
+    {
+        $info = self::query()
+            ->where("phone", $phone)
+            ->where("type", $type)
+            ->where("updated_at", ">", $time)
+            ->first();
 
         return $info;
     }
