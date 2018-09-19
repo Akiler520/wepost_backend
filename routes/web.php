@@ -44,5 +44,10 @@ Route::group(['middleware'=>'permission'], function () {
 });
 
 Route::group(['prefix' => 'message'], function () {
-    Route::post('send',    'MessageController@send');
+    Route::post('sendNotice',    'MessageController@sendNotice');
+    Route::post('sendSMS',      'MessageController@sendSMS');
+});
+
+Route::group(['prefix' => 'user'], function () {
+    Route::post('register',    'UserController@register');
 });

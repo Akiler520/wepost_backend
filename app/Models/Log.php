@@ -21,9 +21,10 @@ class Log extends Base
      * @return bool
      */
     public static function saveLog($type, $content){
-        $userInfo = $_SERVER['userInfo'];
+        $userID = isset($_SERVER['userInfo']) ? $_SERVER['userInfo']->id : 0;
+
         $data = [
-            "user_id"   => $userInfo->id,
+            "user_id"   => $userID,
             "type"      => $type,
             "content"   => $content
         ];

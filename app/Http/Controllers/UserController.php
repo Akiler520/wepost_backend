@@ -7,6 +7,7 @@ use App\Lib\MTResponse;
 use App\Libraries\Ak\AkUploader;
 use App\Models\App;
 use App\Models\Article;
+use App\Models\Sms;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -197,6 +198,35 @@ class UserController extends Controller
             MTResponse::jsonResponse("ok", RESPONSE_SUCCESS);
         }else{
             MTResponse::jsonResponse("null", RESPONSE_ERROR);
+        }
+    }
+
+    public function register(Request $request)
+    {
+        $phone = $request->input("phone");
+        $password = $request->input("password");
+        $verifyCode = $request->input("code");
+
+        $codeInfo = Sms::getByPhone($phone, 1, 60 * 5);
+
+        if (!$codeInfo || $codeInfo->code != $verifyCode) {
+            MTResponse::jsonResponse("验证码错误", RESPONSE_ERROR);
+        }
+
+        $newData = [
+            'username'  => $phone,
+            'nickname'  => $phone,
+            'password'  => $password
+        ];
+
+        $deployEnvObj = new  User();
+
+        $ret_insert = $deployEnvObj->createOne($newData);
+
+        if ($ret_insert) {
+            MTResponse::jsonResponse("注册成功", RESPONSE_SUCCESS);
+        } else {
+            MTResponse::jsonResponse("注册失败，请重试！", RESPONSE_ERROR);
         }
     }
 

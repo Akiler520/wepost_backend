@@ -152,4 +152,11 @@ class User extends Base
 
         return $userInfo;
     }
+
+    public static function getByUsername($name)
+    {
+        $userInfo = self::query()->where("username", $name)->first();
+
+        return $userInfo;
+    }
 }
